@@ -1,4 +1,4 @@
-const dbConfig = require('../db.config')
+const dbConfig = require('../db-config')
 const sequelize = require('sequelize')
 
 const sequelizing = new sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {

@@ -1,5 +1,6 @@
 const express =require('express')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 
 const oneRoute = require('./routes/one-route')
 const twoRoute = require('./routes/two-route')
@@ -8,11 +9,12 @@ const companiesRoute = require('./routes/companies-route')
 const employeesRoute = require('./routes/employees-route')
 
 const db = require('./models/index')
-db.sequelizing.sync()
 
 const app = express()
 
-app.use(express.json())
+db.sequelizing.sync()
+
+app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/api/fibonacci', oneRoute)

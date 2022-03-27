@@ -1,7 +1,7 @@
 const db = require('../models/index')
 const Company = db.companies
 
-const getCompany = (req, res, next) => {
+const getAllCompanies = (req, res, next) => {
     let comp = Company.findAll()
     .then(data => {
         res.send(data).json({comp})
@@ -15,17 +15,29 @@ const getCompany = (req, res, next) => {
 }
 
 const createCompany = (req, res, next) => {
-    const { company_name, telephone_number, address } = req.body
+    const { company_name, telephone_number, is_active, address } = req.body
+
+    let telp = null
+    if(telephone_number) {
+      telp = telephone_number
+    }
+
+    let act = false
+    if(is_active) {
+      act = is_active
+    }
 
     const company = {
         company_name,
-        telephone_number,
+        telephone_number: telp,
+        is_active: act,
         address
     }
 
     Company.create(company)
     .then(data => {
-        res.send(data).json({company})
+      console.log(data)
+      res.send(data).json({company})
     })
     .catch(err => {
         res.status(500).send({
@@ -35,5 +47,5 @@ const createCompany = (req, res, next) => {
       })
 }
 
-exports.getCompany = getCompany
+exports.getAllCompanies = getAllCompanies
 exports.createCompany = createCompany
